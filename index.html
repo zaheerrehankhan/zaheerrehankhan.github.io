@@ -11,7 +11,45 @@
 
 <!-- this what is shown on the broweser -->
 <body>
-	<h2> Networking</h2>
-	<h2> Database </h2>
+	<h1> Networking</h1>
+	<h2> Protocols </h2>
+	<h3>TCP: Transmission Control Protocol</h3>
+	<p>This is reliable , ordered and error chanced. This can be a slower that some other protocols.
+		If the receiver doesn’t send an acknowledgement the sender sends the packet again. TCP puts number in each packet , the sequence is important, because it will tell how to create the message. If the message sees if the one of the sequence is missing it will ask to send the message again from that missing packet.
+		Checksu is attached to the message, receiver checks the checksum, if the receiver is nit the same it will ask for it again.</p>
+
+	<h3>UDP : User Datagram Protocol</h3>
+	<p>It doesn’t have the complexity of TCP. There is no two way communication , no acknowledgement and numbered message. So it is faster.
+		UDP is good for content stream of data.  (Monitoring like stock exchange, Video streaming - some times you see a glitch, Gaming)
+		so decision is can you afford to loose some of the data and speed more important.</p>
+
+	<h3>HTTP : Hyper Text Transfer protocol</h3>
+	<p>Based on TCP protocol, request r-response protocol and Layer 7 application
+			Request:  The Request has METHOD , URL , HEADE, Body (Optional)
+			Response : Status, Headers and Body
+			HTTP Methods : GET , DELETE , POST , PATCH , PUT
+			Status Codes. : 1xx - Informational , 2xx - Successful, 3xx - Redirection , 4xx  client error , 5xx - Server Error
+	</p>
+
+	<h3>WEB SOCKETS : (Built on TCP)</h3>
+	<p>Connection is established only once. Real time message delivery to the client.
+		More complicated to implement than http , may not have best support in seam language, may have issues with load balancer. We do not have http verbs for web sockets.</p>
+
+	<h3>Long Polling</h3>
+	<p>HTTP connection that lives long till we get the message back.
+		Long lived http connection. Allows Real time messaging if we cannot implement webscoekts
+		May be hard to implement in some. Languages, also if it is based on threads it will take up a thread.</p>
+
+	<h3>gRPC</h3>
+	<p>RPC : Remote procedure call. Incoke another service as it it is a local function. Alsways created using abstract call.
+		gRPC : RPC developed by google. It uses protobuf and to traport it uses http2.   You cannot use it in browser
+			protobuf : Binary protocol, not human readable. They are smaller than Json and hence they are faster.
+
+		gRPC is a binary protocol and RPC is a txt-base protocol</p>
+
+	<h3>GraphQL (NOT)</h3>
+	<p>QL stands for query language. Based on Http and request response are in json format. Lets you define which fields to return and lets you define which nested entities to return.
+		in GeaphqL get is represented as Query and other methods like POST , PUT etc are called Mutation
+		Results are less cacheable , supports outside of javascript ecosystem is not great</p>
 </body>
 </html>
