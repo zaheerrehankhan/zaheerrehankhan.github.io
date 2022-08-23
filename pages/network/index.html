@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain attribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }      
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+};
+</script>
+
+<!--  this is the met details for html page -->
+<head>
+	<meta charset="utf-8">
+
+	<!-- This is how you comment in html -->
+	<title> ZAK's Learning / Goals</title>
+	<link rel="shortcut icon"  href="https://zaheerrehankhan.github.io/images/favicon.ico" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	body {
+	  font-family: "Lato", sans-serif;
+	}
+
+		.sidenav {
+	  height: 100%;
+	  width: 250px;
+	  position: fixed;
+	  z-index: 1;
+	  top: 0;
+	  left: 0;
+	  background-color: #111;
+	  overflow-x: hidden;
+	  padding-top: 20px;
+	}
+
+	.sidenav a {
+	  padding: 6px 6px 6px 32px;
+	  text-decoration: none;
+	  font-size: 25px;
+	  color: #818181;
+	  display: block;
+	}
+
+	.sidenav b {
+	  padding: 6px 6px 6px 6px;
+	  text-decoration: none;
+	  font-size: 20px;
+	  color: #818181;
+	  display: block;
+	}
+
+	.sidenav a:hover {
+	  color: #f1f1f1;
+	}
+
+	.main {
+	  margin-left: 250px; /* Same as the width of the sidenav */
+	}
+
+	@media screen and (max-height: 450px) {
+	  .sidenav {padding-top: 15px;}
+	  .sidenav a {font-size: 18px;}
+	}
+	</style>
+</head>
+
+<!-- this what is shown on the broweser -->
+<body>
+
+
+<!-- Side navigation -->
+<div w3-include-html="https://zaheerrehankhan.github.io/leftnav.html"></div> 
+
+<script>
+includeHTML();
+</script>
+
+<!-- Page content -->
+  <h1> Networking</h1>
+	<h2> Protocols </h2>
+	<b>TCP: Transmission Control Protocol</b>
+	<p>This is reliable , ordered and error chanced. This can be a slower that some other protocols.
+		If the receiver doesn’t send an acknowledgement the sender sends the packet again. TCP puts number in each packet , the sequence is important, because it will tell how to create the message. If the message sees if the one of the sequence is missing it will ask to send the message again from that missing packet.
+		Checksu is attached to the message, receiver checks the checksum, if the receiver is nit the same it will ask for it again.</p>
+
+	<b>UDP : User Datagram Protocol</b>
+	<p>It doesn’t have the complexity of TCP. There is no two way communication , no acknowledgement and numbered message. So it is faster.
+		UDP is good for content stream of data.  (Monitoring like stock exchange, Video streaming - some times you see a glitch, Gaming)
+		so decision is can you afford to loose some of the data and speed more important.</p>
+
+	<b>HTTP : Hyper Text Transfer protocol</b>
+	<p>Based on TCP protocol, request r-response protocol and Layer 7 application
+			Request:  The Request has METHOD , URL , HEADE, Body (Optional)
+			Response : Status, Headers and Body
+			HTTP Methods : GET , DELETE , POST , PATCH , PUT
+			Status Codes. : 1xx - Informational , 2xx - Successful, 3xx - Redirection , 4xx  client error , 5xx - Server Error
+	</p>
+
+	<b>WEB SOCKETS : (Built on TCP)</b>
+	<p>Connection is established only once. Real time message delivery to the client.
+		More complicated to implement than http , may not have best support in seam language, may have issues with load balancer. We do not have http verbs for web sockets.</p>
+
+	<b>Long Polling</b>
+	<p>HTTP connection that lives long till we get the message back.
+		Long lived http connection. Allows Real time messaging if we cannot implement webscoekts
+		May be hard to implement in some. Languages, also if it is based on threads it will take up a thread.</p>
+
+	<b>gRPC</b>
+	<p>RPC : Remote procedure call. Incoke another service as it it is a local function. Alsways created using abstract call.
+		gRPC : RPC developed by google. It uses protobuf and to traport it uses http2.   You cannot use it in browser
+			protobuf : Binary protocol, not human readable. They are smaller than Json and hence they are faster.
+
+		gRPC is a binary protocol and RPC is a txt-base protocol</p>
+
+	<b>GraphQL (NOT)</b>
+	<p>QL stands for query language. Based on Http and request response are in json format. Lets you define which fields to return and lets you define which nested entities to return.
+		in GeaphqL get is represented as Query and other methods like POST , PUT etc are called Mutation
+		Results are less cacheable , supports outside of javascript ecosystem is not great</p>
+</div>
+
+
+
+	
+</body>
+</html>
